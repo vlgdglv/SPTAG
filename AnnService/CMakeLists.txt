@@ -37,8 +37,10 @@ if(${CMAKE_CXX_COMPILER_ID} STREQUAL "GNU")
     target_compile_options(DistanceUtils PRIVATE -mavx2 -mavx -msse -msse2 -mavx512f -mavx512bw -mavx512dq -fPIC)
 endif()
 
-add_library (SPTAGLib SHARED ${SRC_FILES} ${HDR_FILES})
-target_link_libraries (SPTAGLib DistanceUtils libzstd_shared ${NUMA_LIBRARY})
+# add_library (SPTAGLib SHARED ${SRC_FILES} ${HDR_FILES})
+# target_link_libraries (SPTAGLib DistanceUtils libzstd_shared ${NUMA_LIBRARY})
+add_library (SPTAGLib STATIC ${SRC_FILES} ${HDR_FILES})
+target_link_libraries (SPTAGLib DistanceUtils libzstd_static ${NUMA_LIBRARY})
 add_library (SPTAGLibStatic STATIC ${SRC_FILES} ${HDR_FILES})
 target_link_libraries (SPTAGLibStatic DistanceUtils libzstd_static ${NUMA_LIBRARY_STATIC})
 if(${CMAKE_CXX_COMPILER_ID} STREQUAL "GNU")
@@ -95,6 +97,10 @@ target_compile_definitions(ssdserving PRIVATE _exe)
 # for Test
 add_library(ssdservingLib ${SSD_SERVING_HDR_FILES} ${SSD_SERVING_FILES})
 target_link_libraries(ssdservingLib SPTAGLibStatic ${Boost_LIBRARIES})
+
+# parse postings
+add_executable(ParsePostings ${AnnService}/src/ParserPostings/main.cpp)
+target_link_libraries(ParsePostings ${Boost_LIBRARIES} SPTAGLibStatic)
 
 find_package(MPI)
 if (MPI_FOUND)

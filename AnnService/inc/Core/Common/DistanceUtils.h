@@ -94,7 +94,6 @@ namespace SPTAG
             static float ComputeCosineDistance_AVX(const float* pX, const float* pY, DimensionType length);
             static float ComputeCosineDistance_AVX512(const float* pX, const float* pY, DimensionType length);
 
-
             template<typename T>
             static inline float ComputeDistance(const T* p1, const T* p2, DimensionType length, SPTAG::DistCalcMethod distCalcMethod)
             {
