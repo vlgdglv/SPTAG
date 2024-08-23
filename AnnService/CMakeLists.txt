@@ -96,6 +96,10 @@ target_compile_definitions(ssdserving PRIVATE _exe)
 add_library(ssdservingLib ${SSD_SERVING_HDR_FILES} ${SSD_SERVING_FILES})
 target_link_libraries(ssdservingLib SPTAGLibStatic ${Boost_LIBRARIES})
 
+# for ParsePostings
+add_executable(ParsePostings ${AnnService}/src/ParsePostings/main.cpp)
+target_link_libraries(ParsePostings SPTAGLibStatic ${Boost_LIBRARIES})
+
 find_package(MPI)
 if (MPI_FOUND)
     message (STATUS "Found MPI.")
